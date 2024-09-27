@@ -4,39 +4,44 @@ import java.util.Random;
 
 public class Lotto {
     public static void main(String[] args) throws Exception {
-       
-        int i = 0;
-        int[] lottonumerot = new int[7];
-        ArrayList<Integer> arvotutNumerot = new ArrayList<>(); 
-
         Random arvonta = new Random();
-
+        int i = 0;
+        ///Taulukko, jonka arvoiksi tulee arvonnan numerot 
+        int[] lottonumerot = new int[7];
+        
+        ///Lista, johon kerätään arvotut numerot ja joista muodostuu "oikea rivi"  
+        ArrayList<Integer> oikeatNumerot = new ArrayList<>(); 
+        
         System.out.println("Loton oikea rivi on: " );
         
-        while (arvotutNumerot.size() < 7){
+        ///Lottonumeroiden arvonta
+        while (oikeatNumerot.size() < lottonumerot.length){
             for (i = 0; i < lottonumerot.length; i++){           
             
                 lottonumerot[i] = arvonta.nextInt(39) + 1; 
-
-                if (!arvotutNumerot.contains(lottonumerot[i])){
-                    arvotutNumerot.add(lottonumerot[i]);
-                }        
                 
-                else if (arvotutNumerot.contains(lottonumerot[i])){
+                ///Jos numeroa ei ole aiemmin arvottu:
+                if (!oikeatNumerot.contains(lottonumerot[i])){
+                    oikeatNumerot.add(lottonumerot[i]);
+                } 
+                ///Jos numero on jo arvottu, arvotaan uusi numero:       
+                else if (oikeatNumerot.contains(lottonumerot[i])){
                     int numero = 0;
                     do {
                         numero = arvonta.nextInt(39) + 1;
-                    } while (arvotutNumerot.contains(numero)); 
+                    } while (oikeatNumerot.contains(numero)); 
                     lottonumerot[i] = numero;
-                    arvotutNumerot.add(numero);
+                    oikeatNumerot.add(numero);
                 }            
-
-                arvotutNumerot.get(i);
-
             }          
         } 
-        Collections.sort(arvotutNumerot);
-        System.out.println(arvotutNumerot);
-        System.out.println();     
+        ///Järjestetään numerot järjestykseen
+        Collections.sort(oikeatNumerot);
+        
+        ///Tulostetaan oikean rivin numerot
+        for (int nro : oikeatNumerot){
+            System.out.print(nro + ", ");
+        }
+        System.out.print("Onnea voittajille!");
     }
 }
